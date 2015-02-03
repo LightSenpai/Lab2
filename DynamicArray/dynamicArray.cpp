@@ -59,14 +59,14 @@ DynamicArray& DynamicArray::operator=(const DynamicArray & _source)
 
 bool DynamicArray::operator==(const DynamicArray & _source)
 {
-	if (tabElements = _source.tabElements)
+	for (unsigned int i = 0; i < capacite; i++)
 	{
-		return true;
+		if (tabElements[i] != _source.tabElements[i] || capacite != _source.capacite)
+		{
+			return false;
+		}
 	}
-	else
-	{
-		return false;
-	}
+	return true;
 }
 
 void DynamicArray::setElement(unsigned int _index, int _valeur)
