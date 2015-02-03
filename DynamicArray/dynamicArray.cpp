@@ -42,6 +42,33 @@ DynamicArray::~DynamicArray()
 
 }
 
+DynamicArray& DynamicArray::operator=(const DynamicArray & _source)
+{
+	if (&_source != this)
+	{
+		delete[] tabElements;
+		capacite = _source.capacite;
+		tabElements = new int[capacite];
+		for (unsigned int i = 0; i < capacite; i++)
+		{
+			tabElements[i] = _source.tabElements[i];
+		}
+	}
+	return *this;
+}
+
+bool DynamicArray::operator==(const DynamicArray & _source)
+{
+	if (tabElements = _source.tabElements)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void DynamicArray::setElement(unsigned int _index, int _valeur)
 {
 	if (_index > capacite)
