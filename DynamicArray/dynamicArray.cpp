@@ -28,6 +28,15 @@ DynamicArray::DynamicArray(int _capacite)
 	}
 }
 
+DynamicArray::DynamicArray(const DynamicArray & _source)
+:capacite(_source.capacite), tabElements(new int[_source.capacite])
+{
+	for (unsigned int i = 0; i < capacite; i++)
+	{
+		tabElements[i] = _source.tabElements[i];
+	}
+}
+
 DynamicArray::~DynamicArray()
 {
 
