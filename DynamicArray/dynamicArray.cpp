@@ -59,14 +59,33 @@ DynamicArray& DynamicArray::operator=(const DynamicArray & _source)
 
 bool DynamicArray::operator==(const DynamicArray & _source)
 {
+	if (capacite != _source.capacite)
+	{
+		return false;
+	}
 	for (unsigned int i = 0; i < capacite; i++)
 	{
-		if (tabElements[i] != _source.tabElements[i] || capacite != _source.capacite)
+		if (tabElements[i] != _source.tabElements[i])
 		{
 			return false;
 		}
 	}
 	return true;
+}
+
+DynamicArray& DynamicArray::operator+=(const DynamicArray & _source)
+{
+	int ancienneCapacite = capacite;
+	int nouvelleCapacite = ancienneCapacite + _source.capacite;
+	int capaciteTableauAconcatener = _source.capacite;
+
+	setCapacite(nouvelleCapacite);
+
+	for (unsigned int i = 0; i < capaciteTableauAconcatener; i++)
+	{
+		tabElements[ancienneCapacite + 1] = _source.tabElements[i];
+	}
+	return *this;
 }
 
 void DynamicArray::setElement(unsigned int _index, int _valeur)

@@ -227,6 +227,26 @@ namespace DynamicArrayTests
 
 		}
 
+		TEST_METHOD(le_constructeur_de_copie_devrait_faire_une_copie_profonde_de_tout_le_contenu_d_un_dynamicArray)
+		{
+			//Arrange
+			const int CAPACITE = 5;
+			DynamicArray tableau1(CAPACITE);
+
+			for (unsigned int i = 0; i < CAPACITE; ++i)
+			{
+				tableau1.setElement(i, i*i);
+			}
+
+			//Action
+			DynamicArray tableau2(tableau1);
+			tableau2.setElement(0, 9999);
+
+			//Assert
+			Assert::IsTrue(tableau1.getElement(0) != tableau2.getElement(0));
+
+		}
+
 		TEST_METHOD(l_operateur_egal_devrait_copier_tout_le_contenu_d_un_dynamicArray)
 		{
 			//Arrange
@@ -286,71 +306,71 @@ namespace DynamicArrayTests
 		}
 
 
-	//	TEST_METHOD(l_operateur_d_addition_devrait_concatener_deux_dynamicArrays_si_differents)
-	//	{
-	//		//Arrange
-	//		const int TABLEAU_1_CAPACITE_DEPART = 3;
-	//		const int TABLEAU_2_CAPACITE = 5;
+		TEST_METHOD(l_operateur_d_addition_devrait_concatener_deux_dynamicArrays_si_differents)
+		{
+			//Arrange
+			const int TABLEAU_1_CAPACITE_DEPART = 3;
+			const int TABLEAU_2_CAPACITE = 5;
 
-	//		DynamicArray tableau1(TABLEAU_1_CAPACITE_DEPART);
-	//		for (unsigned int i = 0; i < TABLEAU_1_CAPACITE_DEPART; ++i)
-	//		{
-	//			tableau1.setElement(i, i*i);
-	//		}
-	//		
-	//		DynamicArray tableau2(TABLEAU_2_CAPACITE);
-	//		for (unsigned int i = 0; i < TABLEAU_2_CAPACITE; ++i)
-	//		{
-	//			tableau2.setElement(i, i*i*i);
-	//		}
+			DynamicArray tableau1(TABLEAU_1_CAPACITE_DEPART);
+			for (unsigned int i = 0; i < TABLEAU_1_CAPACITE_DEPART; ++i)
+			{
+				tableau1.setElement(i, i*i);
+			}
+			
+			DynamicArray tableau2(TABLEAU_2_CAPACITE);
+			for (unsigned int i = 0; i < TABLEAU_2_CAPACITE; ++i)
+			{
+				tableau2.setElement(i, i*i*i);
+			}
 
-	//		//Action
-	//		tableau1 += tableau2;
+			//Action
+			tableau1 += tableau2;
 
-	//		//Assert
-	//		Assert::AreEqual(TABLEAU_1_CAPACITE_DEPART + TABLEAU_2_CAPACITE, tableau1.getCapacite());
-	//		
-	//		//Est-ce que les éléments du tableau 1 sont toujours présents (à partir du début)
-	//		for (unsigned int i = 0; i < TABLEAU_1_CAPACITE_DEPART; ++i)
-	//		{
-	//			Assert::AreEqual(int(i*i), tableau1.getElement(i));
-	//		}
-	//		
-	//		//Est-ce que les éléments du tableau 2 ont été ajoutés à la suite du tableau 1 ?
-	//		for (unsigned int i = TABLEAU_1_CAPACITE_DEPART; i < tableau1.getCapacite(); ++i)
-	//		{
-	//			Assert::AreEqual(tableau2.getElement(i - TABLEAU_1_CAPACITE_DEPART), tableau1.getElement(i));
-	//		}
-	//	}
+			//Assert
+			Assert::AreEqual(TABLEAU_1_CAPACITE_DEPART + TABLEAU_2_CAPACITE, (int)tableau1.getCapacite());
+			
+			//Est-ce que les éléments du tableau 1 sont toujours présents (à partir du début)
+			for (unsigned int i = 0; i < TABLEAU_1_CAPACITE_DEPART; ++i)
+			{
+				Assert::AreEqual(int(i*i), tableau1.getElement(i));
+			}
+			
+			//Est-ce que les éléments du tableau 2 ont été ajoutés à la suite du tableau 1 ?
+			for (unsigned int i = TABLEAU_1_CAPACITE_DEPART; i < tableau1.getCapacite(); ++i)
+			{
+				Assert::AreEqual(tableau2.getElement(i - TABLEAU_1_CAPACITE_DEPART), tableau1.getElement(i));
+			}
+		}
 
-	//	TEST_METHOD(l_operateur_d_addition_devrait_ajoueter_le_dynamicArray_a_sa_suite_si_identique)
-	//	{
-	//		//Arrange
-	//		const int TABLEAU_CAPACITE_DEPART = 3;
+		TEST_METHOD(l_operateur_d_addition_devrait_ajouter_le_dynamicArray_a_sa_suite_si_identique)
+		{
+			//Arrange
+			const int TABLEAU_CAPACITE_DEPART = 3;
 
-	//		DynamicArray tableau(TABLEAU_CAPACITE_DEPART);
-	//		for (unsigned int i = 0; i < TABLEAU_CAPACITE_DEPART; ++i)
-	//		{
-	//			tableau.setElement(i, i*i);
-	//		}
+			DynamicArray tableau(TABLEAU_CAPACITE_DEPART);
+			for (unsigned int i = 0; i < TABLEAU_CAPACITE_DEPART; ++i)
+			{
+				tableau.setElement(i, i*i);
+			}
 
-	//		//Action
-	//		tableau += tableau;
+			//Action
+			tableau += tableau;
 
-	//		//Assert
-	//		Assert::AreEqual(TABLEAU_CAPACITE_DEPART * 2, tableau.getCapacite());
+			//Assert
+			Assert::AreEqual(TABLEAU_CAPACITE_DEPART * 2, (int)tableau.getCapacite());
 
-	//		for (unsigned int i = 0; i < TABLEAU_CAPACITE_DEPART; ++i)
-	//		{
-	//			Assert::AreEqual(int(i*i), tableau.getElement(i));
-	//		}
+			for (unsigned int i = 0; i < TABLEAU_CAPACITE_DEPART; ++i)
+			{
+				Assert::AreEqual(int(i*i), tableau.getElement(i));
+			}
 
-	//		for (unsigned int i = TABLEAU_CAPACITE_DEPART; i < tableau.getCapacite(); ++i)
-	//		{
-	//			int valeurElement = int((i - TABLEAU_CAPACITE_DEPART) * (i - TABLEAU_CAPACITE_DEPART));
-	//			Assert::AreEqual(valeurElement, tableau.getElement(i));
-	//		}
-	//	}
+			for (unsigned int i = TABLEAU_CAPACITE_DEPART; i < tableau.getCapacite(); ++i)
+			{
+				int valeurElement = int((i - TABLEAU_CAPACITE_DEPART) * (i - TABLEAU_CAPACITE_DEPART));
+				Assert::AreEqual(valeurElement, tableau.getElement(i));
+			}
+		}
 
 
 	private:
